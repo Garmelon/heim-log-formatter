@@ -1,2 +1,0 @@
-# heim-log-formatter
-AD
