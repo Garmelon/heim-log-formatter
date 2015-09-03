@@ -1,5 +1,3 @@
-# I do know this is very badly written :P
-
 import json, sys, time, operator
 
 INPUTFILE = sys.argv[1]
@@ -9,10 +7,7 @@ def room_to_string(room, ilvl = 0): # iteration level
 	string = []
 	indentation = []
 	indentation.append("|  "*ilvl)
-	#for message in room:
 	for message in reversed(room):
-	#for index in range(len(room), 0):
-		#message = room[index]
 		s = "[" + message["sender"] + "] "
 		ss = "".ljust(len(s))
 		for i, line in enumerate(message["content"].strip().splitlines()):
@@ -34,7 +29,7 @@ with open(INPUTFILE, "r") as f:
 	messages = json.load(f)
 
 # threading
-imessages = {} # imessages[id] = smsg
+imessages = {}
 for msg in messages:
 	imessages[msg["id"]] = {u"time":msg["time"], u"sender":msg["sender"]["name"], u"content":msg["content"], u"id":msg["id"], u"children":[]}
 	if u"parent" in msg:
@@ -44,7 +39,7 @@ for mid in imessages:
 	if "parent" in msg:
 		if msg["parent"] in imessages:
 			imessages[msg["parent"]]["children"].append(msg)
-		#else:
+		#else: # comment this out to see messages with a nonexistent parent (as "root" messages)
 			#del(msg["parent"])
 room = []
 for mid in imessages:
